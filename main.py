@@ -17,7 +17,12 @@ def index():
     return JSONResponse(content={"message": "Hello World!, i am chitti , speed 1 tera hertz, memory 1 zettabyte"})
 
 @api.get("/todos/{id}")
-def get_todo(id):
+def get_todo(id: int):
     for todo in todos:
         if todo["id"] == id:
             return JSONResponse(content = todo)
+    return JSONResponse(status_code=404, content={"message": "Todo not found"})
+
+@api.get("/todos")
+def get_all_todos():
+    return [todo["task"] for todo in todos]
